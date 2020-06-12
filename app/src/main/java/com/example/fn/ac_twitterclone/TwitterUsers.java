@@ -52,11 +52,11 @@ public class TwitterUsers extends AppCompatActivity implements AdapterView.OnIte
         // initialisieren
         listView = findViewById(R.id.listView);
 
-        // initialisieren und anlegen
+        // anlegen und initialisieren
         tUsers = new ArrayList<>();
         adapter = new ArrayAdapter(TwitterUsers.this, android.R.layout.simple_list_item_checked, tUsers);
         listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE); // MULTIPLE Optionsfelder
-        // OnKeyListener erstellen für die Funktion
+        // OnItemClickListener erstellen für die Funktion
         listView.setOnItemClickListener(this);
 
         try {
@@ -101,7 +101,6 @@ public class TwitterUsers extends AppCompatActivity implements AdapterView.OnIte
                 }
             });
         } catch (Exception e) {
-
             e.getMessage();
         }
     }
@@ -115,11 +114,13 @@ public class TwitterUsers extends AppCompatActivity implements AdapterView.OnIte
     }
 
     @Override
+    // Methode anlegen für Funktion Menu
     public boolean onOptionsItemSelected(MenuItem item) {
         // Switch-Case für Auswahl/ Funktion Button
         switch (item.getItemId()) {
             // User ausloggen
             case R.id.logout_item:
+                // der angemeldete User wird ausgeloggt
                 ParseUser.getCurrentUser().logOutInBackground(new LogOutCallback() {
                     @Override
                     public void done(ParseException e) {

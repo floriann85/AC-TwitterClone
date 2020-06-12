@@ -54,6 +54,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (view.getId()) {
 
             case R.id.btnLoginActivity:
+                // Abfrage ob die Werte für den Login nicht gefüllt sind
+                if (edtLoginEmail.getText().toString().equals("") ||
+                        edtLoginPassword.getText().toString().equals("")) {
+
+                    FancyToast.makeText(LoginActivity.this,
+                            "Email, Password is required!",
+                            Toast.LENGTH_SHORT, FancyToast.INFO,
+                            true).show();
+                }
+
                 // bestehenden User von der DB auf dem Server abfragen
                 // ParseObjekt erstellen
                 ParseUser.logInInBackground(edtLoginEmail.getText().toString(),
@@ -61,14 +71,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         new LogInCallback() {
                             @Override
                             public void done(ParseUser user, ParseException e) {
-                                // Abfrage ob kein Error
+                                // Abfrage ob User vorhanden und ob kein Error
                                 if (user != null && e == null) {
-
                                     FancyToast.makeText(LoginActivity.this,
                                             user.getUsername() + " is Logged in successfully",
                                             Toast.LENGTH_SHORT, FancyToast.SUCCESS,
                                             true).show();
                                     transitionToSocialMediaActivity();
+
+                                    // die Eingabefelder sind gefüllt aber der User ist nicht registriert
+                                } else if (user == null && !edtLoginEmail.getText().toString().equals("") &&
+                                        !edtLoginPassword.getText().toString().equals("")) {
+                                    // der User ist noch nicht registriert
+                                    FancyToast.makeText(LoginActivity.this,
+                                            "You are not registered!\n" +
+                                                    "Please register!",
+                                            Toast.LENGTH_LONG, FancyToast.ERROR,
+                                            true).show();
                                 }
                             }
                         });

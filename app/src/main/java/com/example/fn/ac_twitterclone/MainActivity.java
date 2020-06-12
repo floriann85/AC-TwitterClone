@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // den Title für die Activity setzen
         setTitle("Welcome to Twitter!");
 
+        // Information einer Installation durch einen User,
+        // diese wird auf dem Server/ Backend gespeichert
         ParseInstallation.getCurrentInstallation().saveInBackground();
 
         // initialisieren
